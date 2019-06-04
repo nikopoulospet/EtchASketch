@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "C:\\RBEArduino\\RBE-arduino\\Arduino-1.8.5\\tools\\**",
+                "C:\\RBEArduino\\RBE-arduino\\Arduino-1.8.5\\hardware\\arduino\\avr\\**",
+                "C:\\RBEArduino\\RBE-arduino\\arduino-1.8.5/**",
+                "${workspaceFolder}/**",
+                "C:\\Users\\Peter Nikopoulos\\Documents\\Arduino\\libraries\\StepperDriver-master\\src"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "intelliSenseMode": "msvc-x64",
+            "forcedInclude": [
+                "C:\\RBEArduino\\RBE-arduino\\Arduino-1.8.5\\hardware\\arduino\\avr\\cores\\arduino\\Arduino.h"
+            ]
+        }
+    ],
+    "version": 4
+}

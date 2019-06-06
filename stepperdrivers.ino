@@ -50,16 +50,16 @@ void setup(){
 
 int X_move = 0;
 int Y_move = 0;
-input == " ";
+
 
 void grabSerial(){
     if(Serial.available()){
-        input = String(Serial.read());
+        String input = String(Serial.read());
         input.substring(0,4) = X_move;
         input.substring(5,10) = Y_move;
         
     }
-    return X_move , Y_move;
+    //return X_move , Y_move;
 }
 
 void loop(){

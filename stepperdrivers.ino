@@ -5,7 +5,7 @@
 /*
  * Setting up stepper driver info
  */
- 
+
 //pretty much useless vvv
 #define Motor_Steps 200
 //^^^
@@ -13,12 +13,11 @@
 //RPM defined here, probably going to ve a variable so it can change in the program
 #define RPM_X 120
 #define RPM_Y 120
-//120 max? 
-
+//120 max?
 
 //Microstepping, 1- full, 2 - half , 4 - quarter, 8 - eighth, 16 - 16th
 //will need to define Pins as well as high or low, this value must correspond
-// state changes? 
+// state changes?
 //Pretty much useless for this application anyways, 200 steps per rev is a high enough resolution for the etch a sketch
 #define Microsteps 1
 
@@ -34,20 +33,20 @@
 #define DIR_Y 5
 #define STEP_Y 6
 
-
 /*
  * Setting up serial read
 */
 
 char RX_byte;
 String RX_str;
+String Xstr;
+String Ystr;
 int Xmove;
 int Ymove;
-boolean Xvalue = false;
-boolean Yvalue = false;
+int counter;
 
 
-// 2 wire configuration 
+// 2 wire configuration
 A4988 Stepper_X(Motor_Steps, DIR_X, STEP_X);
 A4988 Stepper_Y(Motor_Steps, DIR_Y, STEP_Y);
 //syncs motors together
@@ -55,45 +54,60 @@ SyncDriver controller(Stepper_X, Stepper_Y);
 
 //microstepping dealt with later
 
-void setup(){
-    Stepper_X.begin(RPM_X);
-    Stepper_Y.begin(RPM_Y);
-    
-    Serial.begin(9600);
-    
+void setup()
+{
+  Stepper_X.begin(RPM_X);
+  Stepper_Y.begin(RPM_Y);
+
+  Serial.begin(9600);
 }
 
+void grabSerial()
+{
+  if ((Serial.available() > 0))
+  {
+   
+      RX_byte = Serial.read();
 
-void grabSerial(){
-    if((Serial.available() > 0) && (Xvalue == false) && (Yvalue == false)){
-        RX_byte = Serial.read();
-
-        if ((RX_byte >= '0') && (RX_byte <= '9')) {
-          RX_str += RX_byte;
-        }
-        if (RX_byte == 'X'){
-          Xmove = RX_str.toInt();
-          Xvalue == true;
-        }
-        if (RX_byte == 'Y'){
-          Ymove = RX_str.toInt();
-          Yvalue == true;
-        }
-    }
-    //return X_move , Y_move;
+      if ((RX_byte >= '0') && (RX_byte <= '9'))
+      {
+        RX_str += RX_byte;
+      }
+      if (RX_byte == 'X')
+      {
+        Xstr = RX_str;
+        Xmove = Xstr.toInt();
+        RX_str = ' ';
+        //Serial.println(Xmove);
+        counter += 1;
+      }
+      if (RX_byte == 'Y')
+      {
+        Ystr = RX_str;
+        Ymove = Ystr.toInt();
+        RX_str = ' ';
+        //Serial.println(Ymove);
+        counter += 1;
+      }
+   
+  }
 }
 
-void RESET(){
-  Xvalue == false;
-  Yvalue == false;
+void RESET()
+{
   Xmove = 0;
   Ymove = 0;
+  counter = 0;
 }
 
-void loop(){
-    grabSerial();
-    Serial.println("XM" + Xmove);
-    Serial.println("YM" + Ymove);
-    delay(1000);
+void loop()
+{
+  grabSerial();
+  if (counter >= 2){
+    Serial.println(Xmove);
+    Serial.println(Ymove);
+
+    
     RESET();
+    }
 }

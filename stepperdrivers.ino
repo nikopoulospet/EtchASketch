@@ -2,6 +2,10 @@
 #include "A4988.h"
 #include "SyncDriver.h"
 
+/*
+ * Setting up stepper driver info
+ */
+ 
 //pretty much useless vvv
 #define Motor_Steps 200
 //^^^
@@ -31,6 +35,18 @@
 #define STEP_Y 6
 
 
+/*
+ * Setting up serial read
+*/
+
+char RX_byte;
+String RX_str;
+int Xmove;
+int Ymove;
+boolean Xvalue = false;
+boolean Yvalue = false;
+
+
 // 2 wire configuration 
 A4988 Stepper_X(Motor_Steps, DIR_X, STEP_X);
 A4988 Stepper_Y(Motor_Steps, DIR_Y, STEP_Y);
@@ -44,30 +60,40 @@ void setup(){
     Stepper_Y.begin(RPM_Y);
     
     Serial.begin(9600);
-    delay(1000);
-    Serial.print("test");
+    
 }
-
-int X_move = 0;
-int Y_move = 0;
 
 
 void grabSerial(){
-    if(Serial.available()){
-        String input = String(Serial.read());
-        input.substring(0,4) = X_move;
-        input.substring(5,10) = Y_move;
-        
+    if((Serial.available() > 0) && (Xvalue == false) && (Yvalue == false)){
+        RX_byte = Serial.read();
+
+        if ((RX_byte >= '0') && (RX_byte <= '9')) {
+          RX_str += RX_byte;
+        }
+        if (RX_byte == 'X'){
+          Xmove = RX_str.toInt();
+          Xvalue == true;
+        }
+        if (RX_byte == 'Y'){
+          Ymove = RX_str.toInt();
+          Yvalue == true;
+        }
     }
     //return X_move , Y_move;
 }
 
+void RESET(){
+  Xvalue == false;
+  Yvalue == false;
+  Xmove = 0;
+  Ymove = 0;
+}
+
 void loop(){
     grabSerial();
-    Serial.print(X_move);
-    Serial.print(Y_move);
-    
-//    controller.move(200, -200); // x , y
-
+    Serial.println("XM" + Xmove);
+    Serial.println("YM" + Ymove);
     delay(1000);
+    RESET();
 }

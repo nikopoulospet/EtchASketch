@@ -11,8 +11,8 @@
 //^^^
 
 //RPM defined here, probably going to ve a variable so it can change in the program
-#define RPM_X 120
-#define RPM_Y 120
+int RPM_X = 120;
+int RPM_Y = 120;
 //120 max?
 
 //Microstepping, 1- full, 2 - half , 4 - quarter, 8 - eighth, 16 - 16th
@@ -41,6 +41,8 @@ char RX_byte;
 String RX_str;
 String Xstr;
 String Ystr;
+String Cstr; // -X move
+String Ustr; // -Y move
 int Xmove;
 int Ymove;
 int counter;
@@ -89,6 +91,40 @@ void grabSerial()
         //Serial.println(Ymove);
         counter += 1;
       }
+      if (RX_byte == 'C') // opposite X is C
+      {
+        Cstr = RX_str;
+        Xmove = (-1)*(Cstr.toInt());
+        RX_str = ' ';
+        //Serial.println(Xmove);
+        counter += 1;
+      }
+      if (RX_byte == 'U') // opposite Y is U
+      {
+        Ustr = RX_str;
+        Ymove = (-1)*(Ustr.toInt());
+        RX_str = ' ';
+        //Serial.println(Ymove);
+        counter += 1;
+      }
+/*
+      if (RX_byte == 'R')
+      {
+        Rstr = RX_str;
+        RPM_X = Rstr.toInt();
+        Serial.println(RPM_X);
+        RX_str = ' ';
+        
+      }
+      if (RX_byte == 'T')
+      {
+        Tstr = RX_str;
+        RPM_Y = Tstr.toInt();
+        Serial.println(RPM_Y);
+        RX_str = ' ';
+        
+      }
+*/
    
   }
 }

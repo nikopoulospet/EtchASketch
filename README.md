@@ -12,4 +12,5 @@ The A4988 Stepper Motor Driver is susceptible to voltage spikes, so you must att
 Make sure to set the current limit before attaching the motors. Max current = Vref * 2. Vref is measured through the Vref pot on the A4988 board. Attach the - probe of a multimeter to the chip ground and the + probe to the pot on the chip to read the Vref value. In full step mode the current is limited to 70% of the current limit, so in full step mode the current can be set 30% higher for more torque.
 ### Maximizing Stepper Performance
 Maximize stepper performance by using a higher voltage. By shooting up the voltage the motor can switch its polarity faster but to do this safely the coil current must be limited so that it doesn’t exceed the motors rated current. For example, if you are running a 12V motor rated at 1 amp and its running off a 24 volt power supply the current must be limited to 0.5 amps per ohms law.
+#
 ![Finished EtchASketch](https://github.com/nikopoulospet/EtchASketch/blob/master/IMG_9198.JPG)

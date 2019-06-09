@@ -1,5 +1,5 @@
 # EtchASketch
-This is code to control 2 bipolar stepper motors (4 wires) using 2 A4988 Stepper motor drivers via the serial port on an Arduino Uno and the [Stepper Driver library written by **laurb9** found here.](https://github.com/laurb9/StepperDriver)Microstepping controls were not added for this application because with microstepping enabled, the stepper motors don’t have the torque needed to turn the nobs on the Etch a Sketch. 
+This is code to control 2 bipolar stepper motors (4 wires) using 2 A4988 Stepper motor drivers via the serial port on an Arduino Uno and the [Stepper Driver library written by **laurb9** found here.](https://github.com/laurb9/StepperDriver) Microstepping controls were not added for this application because with microstepping enabled, the stepper motors don’t have the torque needed to turn the nobs on the Etch a Sketch. 
 
 ## Serial Input
 This code takes a serial input in the form of one X command and one Y command at a time. for example: 200X600Y

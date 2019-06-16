@@ -75,10 +75,15 @@ void grabSerial()
       {
         RX_str += RX_byte;
       }
+      if (RX_byte == '-')
+      {
+        RX_str += RX_byte;
+      }
+
       if (RX_byte == 'X')
       {
         Xstr = RX_str;
-        Xmove = Xstr.toInt();
+        Xmove = (-1)* Xstr.toInt();
         RX_str = ' ';
         //Serial.println(Xmove);
         counter += 1;
@@ -86,45 +91,12 @@ void grabSerial()
       if (RX_byte == 'Y')
       {
         Ystr = RX_str;
-        Ymove = Ystr.toInt();
+        Ymove = (-1) * Ystr.toInt();
         RX_str = ' ';
         //Serial.println(Ymove);
         counter += 1;
       }
-      if (RX_byte == 'C') // opposite X is C
-      {
-        Cstr = RX_str;
-        Xmove = (-1)*(Cstr.toInt());
-        RX_str = ' ';
-        //Serial.println(Xmove);
-        counter += 1;
-      }
-      if (RX_byte == 'U') // opposite Y is U
-      {
-        Ustr = RX_str;
-        Ymove = (-1)*(Ustr.toInt());
-        RX_str = ' ';
-        //Serial.println(Ymove);
-        counter += 1;
-      }
-/*
-      if (RX_byte == 'R')
-      {
-        Rstr = RX_str;
-        RPM_X = Rstr.toInt();
-        Serial.println(RPM_X);
-        RX_str = ' ';
-        
-      }
-      if (RX_byte == 'T')
-      {
-        Tstr = RX_str;
-        RPM_Y = Tstr.toInt();
-        Serial.println(RPM_Y);
-        RX_str = ' ';
-        
-      }
-*/
+
    
   }
 }
@@ -139,7 +111,7 @@ void RESET()
 void loop()
 {
   grabSerial();
-  if (counter >= 2){
+  if (counter >= 3){
     Serial.println(Xmove);
     Serial.println(Ymove);
     controller.move(Xmove, Ymove); // x , y

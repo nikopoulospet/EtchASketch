@@ -111,7 +111,7 @@ void RESET()
 void loop()
 {
   grabSerial();
-  if (counter >= 3){
+  if (counter >= 2){
     Serial.println(Xmove);
     Serial.println(Ymove);
     controller.move(Xmove, Ymove); // x , y

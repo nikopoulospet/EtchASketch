@@ -3,8 +3,7 @@ This is code to control 2 bipolar stepper motors (4 wires) using 2 A4988 Stepper
 
 ## Serial Input
 This code takes a serial input in the form of one X command and one Y command at a time. for example: 200X600Y
-This would turn the X motor 200 steps clockwise and the Y motor 600 steps clockwise as well. To turn the motors backwards use the "C" or "U" characters to turn counterclockwise for the X and Y motors respectively. For example: 375C100Y would turn the X motor 375 steps counterclockwise and the Y motor 100 steps clockwise. 
-The code runs at a Baud rate of **9600**, although it could be easily changed. 
+This would turn the X motor 200 steps clockwise and the Y motor 600 steps clockwise as well. To turn the motors backwards use a negative number like "-100X-100Y". The code runs at a Baud rate of **9600**, although it could be easily changed. 
 ## Wiring 
 ![Dual A4988 wiring diagram](https://github.com/nikopoulospet/EtchASketch/blob/master/dual%20A4988%20stepper%20driver%20circuit.png)
 The A4988 Stepper Motor Driver is susceptible to voltage spikes, so you must attach at least a 47 μF electrolytic capacitor between the leads of the VMOT and GND pins with the negative terminal on GND. For this application we use 100 μF capacitors. 
